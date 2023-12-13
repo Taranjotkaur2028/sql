@@ -1,0 +1,176 @@
+create database bank
+use bank;
+create table branch(
+branch_name varchar(50),
+branch_code varchar(10),
+location varchar(100)
+);
+
+drop table branch;
+
+create table products(
+prod_id varchar(10),
+prod_name varchar(20)unique,
+prod_desc varchar(200)
+);
+
+drop table products;
+
+create table customers(
+customer_id varchar(20) primary key,
+first_name varchar(40),
+last_name varchar(40),
+phone_no int unique,
+address varchar(100),
+dob date,
+is_active varchar(10) check (is_active in ('active','inactive'))
+);
+
+drop table customers;
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+values ('C1','mohan','kumar',990045,'banglaore','1990-05-07','active');
+
+SELECT * FROM CUSTOMERS
+
+insert into customers
+values ('C2','james','xavier','null','chennai','1995-05-07','active');
+
+insert into customers (customer_id,first_name,last_name,is_active)
+values ('C3','amol','kadir','active');
+
+insert into customers (customer_id,first_name,last_name,is_active)
+values ('C4','david','null','active');
+
+insert into customers (customer_id,first_name,last_name,is_active)
+values ('C20','stephen','null','active');
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C5','adil','null',99001122,'banglore','1990-05-07','active');
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C6','ali','null',990011223,'banglore','1990-05-07','active');
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C7','TFQ',null,990011,'banglore','1990-05-07','active');
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C8','libinus',null,99033333,'banglore','1990-05-07','active');
+
+alter table customers alter phone_no type bigint;
+
+select * from customers
+where first_name='mohan'
+order by customer_id desc 
+commit;
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C30','shiva',null,99001,'banglore','1990-05-07','active');
+
+insert into customers(customer_id,first_name,last_name,phone_no,address,dob,is_active)
+value ('C31','vikram',null,99006,'banglore','1990-05-07','active');
+
+rollback;
+
+create table test(name varchar(10));
+
+
+
+
+
+select * from information_schema.tables where table_schema in ('public', 'dev');
+
+select * from products;
+
+
+
+drop TABLE ACCOUNTS cascade;
+
+CREATE TABLE ACCOUNTS
+(
+	ACC_NO			INT primary key,
+	ACC_TYPE		VARCHAR(30) references products(prod_name),
+	CUST_ID			VARCHAR(20) references customers(customer_id),
+	BALANCE			FLOAT
+);
+
+insert into accounts values (12345, 'Savings', 'C1', 9000);
+insert into accounts values (1234, 'Savings', 'C2', 2000);
+insert into accounts values (1234567, 'Savings', 'C20', 2000);
+
+select * from accounts;
+
+commit;
+rollback;
+
+
+drop TABLE TRANSACTIONS;
+CREATE TABLE TRANSACTIONS
+(
+	TRNS_ID			INT ,
+	TRNS_TYPE		VARCHAR(20) ,
+	TRNS_DATE		DATE,
+	ACC_NO			INT ,
+	AMOUNT			FLOAT,
+	STATUS			VARCHAR(10) default 'Success',
+    constraint pk_trns primary key(trns_id,TRNS_TYPE),
+    constraint fk_acc_no foreign key(acc_no) references accounts(acc_no)
+);
+
+insert into TRANSACTIONS values (1,'Online Payment', current_date, 12345, 100, 'Success');
+
+insert into TRANSACTIONS values (1,'Withdrawal', current_date, 12345, 50, 'Success');
+
+insert into TRANSACTIONS values (1,'test', current_date, 12345, 50, 'Success');
+
+insert into TRANSACTIONS values (1,'ATM Withdrawal', current_date, 90098, 50, 'Success');
+
+
+insert into TRANSACTIONS (trns_id, trns_type, trns_date, acc_no, amount, status)
+values (2,'Online Payment', current_date, 12345, 100, 'Failre');
+
+insert into TRANSACTIONS (trns_id, trns_type, trns_date, acc_no, amount)
+values (3,'Online Payment', current_date, 12345, 100);
+
+insert into TRANSACTIONS (trns_id, trns_type, trns_date, acc_no, amount, status )
+values (4,'Online Payment', current_date, 12345, 100, default);
+
+
+commit;
+
+select * from TRANSACTIONS;
+
+
+CREATE TABLE EMPLOYEES
+(
+	EMP_ID			VARCHAR(20),
+	FIRST_NAME		VARCHAR(40),
+	LAST_NAME		VARCHAR(40),
+	SALARY			FLOAT ,
+	BRANCH_CODE		VARCHAR(10)
+);
+
+select * from employees
+
+create database sales;
+use sales;
+
+create table if not exsist products;
+
+create table products(
+prod_id varchar(10),
+prod_name varchar(20)unique,
+prod_desc varchar(200)
+);
+
+create table customers
+(
+customer__id varchar(20) primary key,
+first_name varchar(40),
+last_name varchar(40),
+phone_no int unique,
+address varchar(100),
+dob date,
+is_active varchar(10) check (is_active in ('active','inactive'))
+);
+
